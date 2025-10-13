@@ -1,0 +1,31 @@
+server:
+  port: 8080
+spring:
+  webflux:
+    base-path: "/task-api-001/api"
+  application:
+    name: "task-api-001"
+  devtools:
+    add-properties: false
+
+  profiles:
+    include: null
+
+  r2dbc:
+    pool:
+      enabled: true
+      initial-size: 50
+      max-size: 100
+      max-lifetime: 1800000
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "health"
+  endpoint:
+    health:
+      show-details: "always"
+      probes:
+        enabled: true
