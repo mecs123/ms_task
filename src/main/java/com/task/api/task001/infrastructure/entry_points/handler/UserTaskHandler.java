@@ -1,6 +1,8 @@
 package com.task.api.task001.infrastructure.entry_points.handler;
 
 import com.task.api.task001.aplication.port.in.UserCase;
+import com.task.api.task001.domain.exceptions.user.UserAlreadyExistsException;
+import com.task.api.task001.infrastructure.entry_points.config.validators.UserValidatorRequest;
 import com.task.api.task001.infrastructure.entry_points.dto.Request.RequestUserTask;
 import com.task.api.task001.infrastructure.entry_points.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,16 @@ import reactor.core.publisher.Mono;
 public class UserTaskHandler {
 
     private final UserCase userCase;
+    private final UserValidatorRequest validator = new UserValidatorRequest();
     public Mono<ServerResponse> createUser(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(RequestUserTask.class)
+                .flatMap(requestValidator-> {
+                    // Validar los datos del usuario
+                    return validator.validate(
+                            requestValidator.name(),
+                            requestValidator.email())
+                            .thenReturn(requestValidator);
+                })
                 .map(UserMapper.INSTANCE::toDomain)
                 .flatMap(userTask ->
                         // devuelve Mono<UserTask>
@@ -27,6 +37,14 @@ public class UserTaskHandler {
                                         ServerResponse.ok()
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .bodyValue(responseUserTask)
+                                )
+                                .onErrorResume(UserAlreadyExistsException.class, e ->
+                                        ServerResponse.status(409)
+                                                .bodyValue(e.getMessage())
+                                ).onErrorResume(Exception.class, e ->
+                                        ServerResponse.status(500)
+                                                .bodyValue("Unexpected error: " + e.getMessage())
+
                                 )
                 );
     }

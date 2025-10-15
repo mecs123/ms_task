@@ -5,8 +5,6 @@ import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
-
 public interface UserTaskRespository extends ReactiveCrudRepository<UserTask, Long> {
 
     @Query("""
@@ -16,6 +14,6 @@ public interface UserTaskRespository extends ReactiveCrudRepository<UserTask, Lo
             """)
     Mono<UserTask> saveUserTask(String name, String email);
 
-    @Query("SELECT * FROM UserTask WHERE id = :id")
-    Optional<UserTask> getById(Long id);
+    @Query("SELECT * FROM UserTask WHERE email = :email")
+    Mono<UserTask> getByEmail(String email);
 }

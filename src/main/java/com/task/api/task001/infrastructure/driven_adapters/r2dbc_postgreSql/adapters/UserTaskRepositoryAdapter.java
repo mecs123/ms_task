@@ -6,6 +6,8 @@ import com.task.api.task001.infrastructure.driven_adapters.repository.UserTaskRe
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 @Repository
 public class UserTaskRepositoryAdapter implements UserRepositoryPort {
 
@@ -15,7 +17,12 @@ public class UserTaskRepositoryAdapter implements UserRepositoryPort {
 
     private final UserTaskRespository userTaskRespository;
     @Override
-    public Mono<UserTask> save(UserTask userTask) {
+    public Mono<UserTask> saveUser(UserTask userTask) {
         return userTaskRespository.saveUserTask(userTask.name(),userTask.email());
+    }
+
+    @Override
+    public Mono<UserTask> getByEmail(String email) {
+        return userTaskRespository.getByEmail(email);
     }
 }

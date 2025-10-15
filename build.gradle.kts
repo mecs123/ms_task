@@ -11,7 +11,7 @@ description = "Description: Task microservice 001 - CRUD básico con WebFlux y P
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
