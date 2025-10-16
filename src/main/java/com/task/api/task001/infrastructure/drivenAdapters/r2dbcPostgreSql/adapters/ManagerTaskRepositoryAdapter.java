@@ -1,9 +1,9 @@
-package com.task.api.task001.infrastructure.driven_adapters.r2dbc_postgreSql.adapters;
+package com.task.api.task001.infrastructure.drivenAdapters.r2dbcPostgreSql.adapters;
 
 import com.task.api.task001.aplication.dto.ManagerTaskDTO;
 import com.task.api.task001.aplication.port.out.ManagerTaskRepositoryPort;
 import com.task.api.task001.domain.model.ManagerTask;
-import com.task.api.task001.infrastructure.driven_adapters.repository.ManagerTaskRepository;
+import com.task.api.task001.infrastructure.drivenAdapters.repository.ManagerTaskRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

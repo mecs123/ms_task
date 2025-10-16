@@ -1,4 +1,4 @@
-package com.task.api.task001.infrastructure.entry_points.config.exepcions;
+package com.task.api.task001.infrastructure.entryPoints.config.exepcions;
 
 import com.task.api.task001.domain.exceptions.user.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;

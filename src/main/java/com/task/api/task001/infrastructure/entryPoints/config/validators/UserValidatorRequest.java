@@ -1,7 +1,6 @@
-package com.task.api.task001.infrastructure.entry_points.config.validators;
+package com.task.api.task001.infrastructure.entryPoints.config.validators;
 
-import com.task.api.task001.infrastructure.entry_points.config.exepcions.ValidationException;
-import com.task.api.task001.infrastructure.entry_points.dto.Request.RequestUserTask;
+import com.task.api.task001.infrastructure.entryPoints.config.exepcions.ValidationException;
 import reactor.core.publisher.Mono;
 
 public class UserValidatorRequest {

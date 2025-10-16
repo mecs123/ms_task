@@ -1,12 +1,10 @@
-package com.task.api.task001.infrastructure.driven_adapters.r2dbc_postgreSql.adapters;
+package com.task.api.task001.infrastructure.drivenAdapters.r2dbcPostgreSql.adapters;
 
 import com.task.api.task001.aplication.port.out.UserRepositoryPort;
 import com.task.api.task001.domain.model.UserTask;
-import com.task.api.task001.infrastructure.driven_adapters.repository.UserTaskRespository;
+import com.task.api.task001.infrastructure.drivenAdapters.repository.UserTaskRespository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
-
-import java.util.Optional;
 
 @Repository
 public class UserTaskRepositoryAdapter implements UserRepositoryPort {

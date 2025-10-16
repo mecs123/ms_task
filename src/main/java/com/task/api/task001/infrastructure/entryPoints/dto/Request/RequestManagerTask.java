@@ -1,8 +1,8 @@
-package com.task.api.task001.infrastructure.entry_points.dto.Response;
+package com.task.api.task001.infrastructure.entryPoints.dto.Request;
 
 import java.time.LocalDate;
 
-public record ResponseManagerTask(
+public record RequestManagerTask(
         String title,
         String description,
         String status,

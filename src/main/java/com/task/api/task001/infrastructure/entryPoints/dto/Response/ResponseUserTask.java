@@ -1,4 +1,4 @@
-package com.task.api.task001.infrastructure.entry_points.dto.Response;
+package com.task.api.task001.infrastructure.entryPoints.dto.Response;
 
 public record ResponseUserTask(
         String name,

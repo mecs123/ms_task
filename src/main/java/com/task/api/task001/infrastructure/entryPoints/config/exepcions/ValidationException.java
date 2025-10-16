@@ -1,4 +1,4 @@
-package com.task.api.task001.infrastructure.entry_points.config.exepcions;
+package com.task.api.task001.infrastructure.entryPoints.config.exepcions;
 
 
 public class ValidationException extends RuntimeException {

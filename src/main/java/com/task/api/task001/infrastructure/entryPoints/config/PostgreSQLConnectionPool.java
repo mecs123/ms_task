@@ -1,4 +1,4 @@
-package com.task.api.task001.infrastructure.entry_points.config;
+package com.task.api.task001.infrastructure.entryPoints.config;
 
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;

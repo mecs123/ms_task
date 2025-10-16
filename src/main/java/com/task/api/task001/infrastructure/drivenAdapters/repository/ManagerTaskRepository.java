@@ -1,4 +1,4 @@
-package com.task.api.task001.infrastructure.driven_adapters.repository;
+package com.task.api.task001.infrastructure.drivenAdapters.repository;
 
 import com.task.api.task001.domain.model.ManagerTask;
 import org.springframework.data.r2dbc.repository.Query;

@@ -1,7 +1,8 @@
-package com.task.api.task001.infrastructure.entry_points;
+package com.task.api.task001.infrastructure.entryPoints;
 
-import com.task.api.task001.infrastructure.entry_points.handler.ManagerTaskHandler;
-import com.task.api.task001.infrastructure.entry_points.handler.UserTaskHandler;
+
+import com.task.api.task001.infrastructure.entryPoints.handler.ManagerTaskHandler;
+import com.task.api.task001.infrastructure.entryPoints.handler.UserTaskHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RequestPredicates;

@@ -1,10 +1,10 @@
-package com.task.api.task001.infrastructure.entry_points.handler;
+package com.task.api.task001.infrastructure.entryPoints.handler;
 
 import com.task.api.task001.aplication.port.in.UserCase;
 import com.task.api.task001.domain.exceptions.user.UserAlreadyExistsException;
-import com.task.api.task001.infrastructure.entry_points.config.validators.UserValidatorRequest;
-import com.task.api.task001.infrastructure.entry_points.dto.Request.RequestUserTask;
-import com.task.api.task001.infrastructure.entry_points.mapper.UserMapper;
+import com.task.api.task001.infrastructure.entryPoints.config.validators.UserValidatorRequest;
+import com.task.api.task001.infrastructure.entryPoints.dto.Request.RequestUserTask;
+import com.task.api.task001.infrastructure.entryPoints.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
