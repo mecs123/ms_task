@@ -20,13 +20,7 @@ public class UserTaskHandler {
     private final UserValidatorRequest validator = new UserValidatorRequest();
     public Mono<ServerResponse> createUser(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(RequestUserTask.class)
-                .flatMap(requestValidator-> {
-                    // Validar los datos del usuario
-                    return validator.validate(
-                            requestValidator.name(),
-                            requestValidator.email())
-                            .thenReturn(requestValidator);
-                })
+                .flatMap(this::validator)
                 .map(UserMapper.INSTANCE::toDomain)
                 .flatMap(userTask ->
                         // devuelve Mono<UserTask>
@@ -50,5 +44,10 @@ public class UserTaskHandler {
     }
 
 
-
+    private Mono<RequestUserTask> validator(RequestUserTask requestValidator) {
+        return validator.validate(
+                        requestValidator.name(),
+                        requestValidator.email())
+                .thenReturn(requestValidator);
+    }
 }

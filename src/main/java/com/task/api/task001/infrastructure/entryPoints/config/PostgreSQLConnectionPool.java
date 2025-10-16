@@ -15,7 +15,6 @@ public class PostgreSQLConnectionPool {
 		String username = "postgres";
 		String password = "1234";
 		String host = "localhost";
-		Long port = 5432L;
 		String dbname = "task";
 		String schemaValue = "public";
 		return new PostgresqlConnectionFactory(
