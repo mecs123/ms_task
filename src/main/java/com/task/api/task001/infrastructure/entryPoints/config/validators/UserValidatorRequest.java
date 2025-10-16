@@ -6,6 +6,7 @@ import reactor.core.publisher.Mono;
 public class UserValidatorRequest {
 
     public UserValidatorRequest() {
+        // Constructor vacío intencionalmente: no se requiere inicialización
     }
 
     public Mono<Void> validate(String name, String email) {
