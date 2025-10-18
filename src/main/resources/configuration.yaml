@@ -1,0 +1,15 @@
+postgres:
+  host: ${POSTGRES_HOST:localhost}
+  port: ${POSTGRES_PORT:5432}
+  database: ${POSTGRES_DB:task}
+  username: ${POSTGRES_USER:postgres}
+  password: ${POSTGRES_PASSWORD:1234}
+  schema: ${POSTGRES_SCHEMA:public}
+
+external:
+  api:
+    base-url: ${EXTERNAL_API_URL:http://localhost:8080}
+    token: ${EXTERNAL_API_TOKEN:default-dev-token}
+
+frontend:
+  url: ${FRONT_URL:http://localhost:3000}
