@@ -22,12 +22,12 @@ public class UserService implements UserCase {
         return validateEmail(userTask.email())
                 .flatMap(exists -> {
                     if (exists.equals(Boolean.TRUE)) {
-                        return Mono.error(new UserAlreadyExistsException("User with email " +
-                                userTask.email() + " already exists"));
+                        return Mono.error(new UserAlreadyExistsException("Usuario con email " +
+                                userTask.email() + " ya existe"));
                     }
                         return userRepositoryPort.saveUser(userTask)
                                 .doOnSuccess(savedUser ->
-                                        log.info("User created with email: {}", savedUser.email()))
+                                        log.info("Userio creado con email: {}", savedUser.email()))
                                 .doOnError(error ->
                                         log.error("Error creating user: {}", error.getMessage()));
                 });

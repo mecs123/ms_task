@@ -9,22 +9,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PostgreSQLConnectionPool {
 
-	@Bean
+	private final PostgresqlConnectionProperties properties;
+
+    public PostgreSQLConnectionPool(PostgresqlConnectionProperties properties) {
+        this.properties = properties;
+    }
+
+    @Bean
 	public ConnectionFactory connectionFactory() {
 
-		String username = "postgres";
-		String password = "1234";
-		String host = "localhost";
-		String dbname = "task";
-		String schemaValue = "public";
+//		String username = "postgres";
+//		String password = "1234";
+//		String host = "localhost";
+//		String dbname = "task";
+//		String schemaValue = "public";
 		return new PostgresqlConnectionFactory(
 				PostgresqlConnectionConfiguration.builder()
-						.host(host)
-						.port(5432)
-						.database(dbname)
-						.username(username)
-						.password(password)
-						.schema(schemaValue)
+						.host(properties.getHost())
+						.port(properties.getPort())
+						.database(properties.getDatabase())
+						.username(properties.getUsername())
+						.password(properties.getPassword())
+						.schema(properties.getSchema())
 						.build()
 		);
 	}

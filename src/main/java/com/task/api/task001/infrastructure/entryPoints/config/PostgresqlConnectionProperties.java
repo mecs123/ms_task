@@ -1,14 +1,14 @@
 package com.task.api.task001.infrastructure.entryPoints.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "postgres")
 public class PostgresqlConnectionProperties {
 
     private String database;

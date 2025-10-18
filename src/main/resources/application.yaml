@@ -1,31 +1,16 @@
 server:
   port: 8080
+
 spring:
-  webflux:
-    base-path: "/task-api-001/api"
   application:
-    name: "task-api-001"
-  devtools:
-    add-properties: false
+    name: task-api-001
+  webflux:
+    base-path: /task-api-001/api
 
+  # Activa el perfil desde variable de entorno (por defecto: dev)
   profiles:
-    include: null
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
-  r2dbc:
-    pool:
-      enabled: true
-      initial-size: 50
-      max-size: 100
-      max-lifetime: 1800000
-
-management:
-  endpoints:
-    web:
-      base-path: /
-      exposure:
-        include: "health"
-  endpoint:
-    health:
-      show-details: "always"
-      probes:
-        enabled: true
+  # Importa el archivo configuration.yaml
+  config:
+    import: optional:classpath:configuration.yaml
