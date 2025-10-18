@@ -22,8 +22,8 @@ public class UserService implements UserCase {
         return validateEmail(userTask.email())
                 .flatMap(exists -> {
                     if (exists.equals(Boolean.TRUE)) {
-                        return Mono.error(new UserAlreadyExistsException("User with email " +
-                                userTask.email() + " already exists"));
+                        return Mono.error(new UserAlreadyExistsException("Usuario con email " +
+                                userTask.email() + " ya existe"));
                     }
                         return userRepositoryPort.saveUser(userTask)
                                 .doOnSuccess(savedUser ->
