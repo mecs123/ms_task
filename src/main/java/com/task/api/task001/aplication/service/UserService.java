@@ -27,7 +27,7 @@ public class UserService implements UserCase {
                     }
                         return userRepositoryPort.saveUser(userTask)
                                 .doOnSuccess(savedUser ->
-                                        log.info("User created with email: {}", savedUser.email()))
+                                        log.info("Userio creado con email: {}", savedUser.email()))
                                 .doOnError(error ->
                                         log.error("Error creating user: {}", error.getMessage()));
                 });
