@@ -1,6 +1,6 @@
 # Gradle
-# Pipeline básico para compilar un proyecto Java con Gradle
-# usando un agente auto-hospedado en Windows (sin ejecutar tests)
+# Pipeline para compilar y ejecutar tests en un proyecto Java con Gradle
+# usando un agente auto-hospedado en Windows
 
 trigger:
   - main
@@ -17,16 +17,18 @@ steps:
       java --version
     displayName: 'Verificar entorno Java'
 
-  # Paso 2: Compilar proyecto sin ejecutar tests
+  # Paso 2: Compilar y ejecutar tests con Gradle
   - task: Gradle@3
-    displayName: 'Compilar proyecto con Gradle (sin tests)'
+    displayName: 'Compilar y ejecutar tests con Gradle'
     inputs:
       gradleWrapperFile: 'gradlew'
-      tasks: 'clean assemble'                # Solo compila, no corre tests
-      options: '-Xmx3072m'
+      tasks: 'clean test assemble'               # Ejecuta limpieza, pruebas y compilación
+      options: '-Xmx2048m'                       # Reduce el uso de memoria
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
       jdkArchitectureOption: 'x64'
+      publishJUnitResults: true                  # Publica resultados JUnit
+      testResultsFiles: '**/build/test-results/test/TEST-*.xml'  # Ruta correcta de los XML
 
   # Paso 3: Publicar artefacto .jar generado
   - task: PublishBuildArtifacts@1
