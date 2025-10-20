@@ -18,20 +18,23 @@ steps:
     displayName: 'Verificar entorno Java'
 
   # Paso 2: Compilar proyecto con Gradle (sin tests)
-  - task: Gradle@3
+  - task: Gradle@2
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
-      gradleWrapperFile: 'gradlew'         # está en la raíz del repo
-      tasks: 'clean assemble'              # Solo compila, sin ejecutar tests
+      workingDirectory: '$(System.DefaultWorkingDirectory)/task001'
+      gradleWrapperFile: '$(System.DefaultWorkingDirectory)/task001/gradlew.bat'
+      tasks: 'clean assemble'
       options: '--info --stacktrace -Xmx3072m'
+      publishJUnitResults: false
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
       jdkArchitectureOption: 'x64'
+    continueOnError: false   # cambia a true solo si quieres que ignore fallos falsos
 
   # Paso 3: Publicar artefacto .jar generado
   - task: PublishBuildArtifacts@1
     displayName: 'Publicar artefacto .jar'
     inputs:
-      PathtoPublish: 'build/libs'
+      PathtoPublish: '$(System.DefaultWorkingDirectory)/task001/build/libs'
       ArtifactName: 'drop'
       publishLocation: 'Container'
