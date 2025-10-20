@@ -22,7 +22,7 @@ steps:
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
       workingDirectory: '$(System.DefaultWorkingDirectory)/task001'
-      gradleWrapperFile: '$(System.DefaultWorkingDirectory)/task001/gradlew.bat'
+      gradleWrapperFile: 'gradlew.bat'
       tasks: 'clean assemble'
       options: '--info --stacktrace -Xmx3072m'
       publishJUnitResults: false
