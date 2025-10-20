@@ -21,8 +21,8 @@ steps:
   - task: Gradle@3
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
-      gradleWrapperFile: 'gradlew'
-      tasks: 'clean assemble'              # 👈 solo compila, sin ejecutar tests
+      gradleWrapperFile: 'task001/gradlew'
+      tasks: 'clean assemble'              # solo compila, sin ejecutar tests
       options: '-Xmx3072m'                 # un poco más de memoria por estabilidad
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
