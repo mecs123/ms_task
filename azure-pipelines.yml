@@ -3,39 +3,29 @@
 # usando un agente auto-hospedado en Windows (sin ejecutar tests)
 
 trigger:
-  - none   # Se ejecuta manualmente, puedes cambiarlo a "main" si usas repositorio conectado
+  - main
 
 pool:
   name: 'Default'                         # Usa tu pool local
   demands:
-    - agent.name -equals customAgentTask  # ⚠️ Asegúrate que el nombre del agente esté bien escrito (custom, no custon)
+    - agent.name -equals custonAgentTask  # Nombre exacto de tu agente local
 
 steps:
-  # Paso 1: Mostrar versión de Java
+  # Paso 1: Mostrar versión de Java (opcional pero útil)
   - script: |
       echo "Verificando versión de Java..."
       java --version
-      echo "Ruta de trabajo actual:"
-      echo %cd%
     displayName: 'Verificar entorno Java'
 
-  # Paso 2: Compilar proyecto con Gradle (sin tests)
+  # Paso 2: Compilar proyecto sin ejecutar tests
   - task: Gradle@3
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
-      workingDirectory: 'C:\springboot\repo_task'
-      gradleWrapperFile: 'C:\springboot\repo_task\gradlew.bat'
-      tasks: 'clean assemble'                # Compila sin ejecutar tests
-      options: '--info --stacktrace -Xmx3072m'
-      publishJUnitResults: false
-      javaHomeOption: 'Path'
+      gradleWrapperFile: 'gradlew'
+      tasks: 'clean assemble'                # Solo compila, no corre tests
+      options: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: 21
+      sqGradlePluginVersionChoice: 'build'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
       jdkArchitectureOption: 'x64'
-
-  # Paso 3: Publicar artefacto .jar generado
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publicar artefacto .jar'
-    inputs:
-      PathtoPublish: 'C:\springboot\repo_task\build\libs'   # Ruta donde Gradle deja el .jar
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
