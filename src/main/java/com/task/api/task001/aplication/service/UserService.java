@@ -7,6 +7,7 @@ import com.task.api.task001.domain.model.UserTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
 @Slf4j
 @Service
 public class UserService implements UserCase {
@@ -22,14 +23,17 @@ public class UserService implements UserCase {
         return validateEmail(userTask.email())
                 .flatMap(exists -> {
                     if (exists.equals(Boolean.TRUE)) {
-                        return Mono.error(new UserAlreadyExistsException("Usuario con email " +
+                        return Mono.error(
+                                new UserAlreadyExistsException("Usuario con email " +
                                 userTask.email() + " ya existe"));
                     }
                         return userRepositoryPort.saveUser(userTask)
                                 .doOnSuccess(savedUser ->
-                                        log.info("Userio creado con email: {}", savedUser.email()))
+                                        log.info("Usuario creado con email: {}",
+                                                savedUser.email()))
                                 .doOnError(error ->
-                                        log.error("Error creating user: {}", error.getMessage()));
+                                        log.error("Error creating user: {}",
+                                                error.getMessage()));
                 });
     }
 
