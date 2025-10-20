@@ -29,7 +29,7 @@ steps:
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
       workingDirectory: '.'
-      gradleWrapperFile: '$(componentName)/gradlew'
+      gradleWrapperFile: '/gradlew'
       tasks: 'clean assemble'                # Solo compila, no corre tests
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
