@@ -24,8 +24,7 @@ steps:
       gradleWrapperFile: 'gradlew'
       tasks: 'clean assemble'                # Solo compila, no corre tests
       options: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: 21
-      sqGradlePluginVersionChoice: 'build'
+      javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
+      sqGradlePluginVersionChoice: 'build'
       jdkArchitectureOption: 'x64'
