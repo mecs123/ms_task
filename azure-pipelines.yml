@@ -11,7 +11,7 @@ pool:
     - agent.name -equals custonAgentTask  # Nombre exacto de tu agente local
 
 steps:
-  # Paso 1: Mostrar versión de Java (opcional pero útil)
+  # Paso 1: Mostrar versión de Java
   - script: |
       echo "Verificando versión de Java..."
       java --version
@@ -21,9 +21,9 @@ steps:
   - task: Gradle@3
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
-      gradleWrapperFile: 'task001/gradlew'
-      tasks: 'clean assemble'              # solo compila, sin ejecutar tests
-      options: '-Xmx3072m'                 # un poco más de memoria por estabilidad
+      gradleWrapperFile: 'gradlew'         # está en la raíz del repo
+      tasks: 'clean assemble'              # Solo compila, sin ejecutar tests
+      options: '--info --stacktrace -Xmx3072m'
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
       jdkArchitectureOption: 'x64'
