@@ -42,3 +42,5 @@ steps:
         -Dsonar.token=sqp_e47a3c97d3b613699a9455394a783627c3685e38
     displayName: 'Análisis SonarQube local'
     condition: eq(variables['Build.SourceBranchName'], 'main')
+
+    # Paso 4: Ejecutar pruebas unitarias SOLO en ramas development/*
