@@ -31,16 +31,3 @@ steps:
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
       sqGradlePluginVersionChoice: 'build'
       jdkArchitectureOption: 'x64'
-
-  # Paso 3: Ejecutar SonarQube SOLO en la rama main
-  - script: |
-      echo "=== Ejecutando análisis SonarQube (solo main) ==="
-      ./gradlew sonar
-        -Dsonar.projectKey=azuredevopstask_repo_task_2f24b017-93a0-4c27-bc82-f7d50f0911ac
-        -Dsonar.projectName='repo_task'
-        -Dsonar.host.url=http://localhost:9000
-        -Dsonar.token=sqp_e47a3c97d3b613699a9455394a783627c3685e38
-    displayName: 'Análisis SonarQube local'
-    condition: eq(variables['Build.SourceBranchName'], 'main')
-
-    # Paso 4: Ejecutar pruebas unitarias SOLO en ramas development/*
