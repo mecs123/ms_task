@@ -3,7 +3,14 @@
 # usando un agente auto-hospedado en Windows (sin ejecutar tests)
 
 trigger:
-  - main
+  branches:
+    include:
+      - main
+      - development/*
+      - feature/*
+  paths:
+    include:
+      - 'repo_task*'
 
 pool:
   name: 'Default'                         # Usa tu pool local
@@ -21,11 +28,10 @@ steps:
   - task: Gradle@3
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
+      workingDirectory: '.'
       gradleWrapperFile: 'gradlew'
       tasks: 'clean assemble'                # Solo compila, no corre tests
-      options: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: 21
-      sqGradlePluginVersionChoice: 'build'
+      javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
+      sqGradlePluginVersionChoice: 'build'
       jdkArchitectureOption: 'x64'
