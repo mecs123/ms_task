@@ -1,7 +1,3 @@
-# Gradle
-# Pipeline básico para compilar un proyecto Java con Gradle
-# usando un agente auto-hospedado en Windows (sin ejecutar tests)
-
 trigger:
   branches:
     include:
@@ -13,25 +9,36 @@ trigger:
       - 'repo_task*'
 
 pool:
-  name: 'Default'                         # Usa tu pool local
+  name: 'Default'
   demands:
-    - agent.name -equals custonAgentTask  # Nombre exacto de tu agente local
+    - agent.name -equals custonAgentTask
 
 steps:
-  # Paso 1: Mostrar versión de Java (opcional pero útil)
+  # Paso 1: Verificar entorno Java
   - script: |
       echo "Verificando versión de Java..."
       java --version
     displayName: 'Verificar entorno Java'
 
-  # Paso 2: Compilar proyecto sin ejecutar tests
+  # Paso 2: Compilar siempre (todas las ramas)
   - task: Gradle@3
     displayName: 'Compilar proyecto con Gradle (sin tests)'
     inputs:
       workingDirectory: '.'
       gradleWrapperFile: 'gradlew'
-      tasks: 'clean assemble'                # Solo compila, no corre tests
+      tasks: 'clean assemble'
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-21'
       sqGradlePluginVersionChoice: 'build'
       jdkArchitectureOption: 'x64'
+
+  # Paso 3: Ejecutar SonarQube SOLO en la rama main
+  - script: |
+      echo "=== Ejecutando análisis SonarQube (solo main) ==="
+      ./gradlew sonar \
+        -Dsonar.projectKey=azuredevopstask_repo_task_2f24b017-93a0-4c27-bc82-f7d50f0911ac \
+        -Dsonar.projectName='repo_task' \
+        -Dsonar.host.url=http://localhost:9000 \
+        -Dsonar.token=sqp_e47a3c97d3b613699a9455394a783627c3685e38
+    displayName: 'Análisis SonarQube local'
+    condition: eq(variables['Build.SourceBranchName'], 'main')
