@@ -8,26 +8,76 @@ trigger:
     include:
       - 'repo_task*'
 
+# Usa un agente propio (por ejemplo, tu PC o VM local)
 pool:
   name: 'Default'
   demands:
     - agent.name -equals custonAgentTask
 
+# Variables centralizadas
+variables:
+  JAVA_HOME: 'C:\Program Files\Java\jdk-21'
+  BUILD_DIR: 'build'
+  BUILD_CONFIGURATION: 'release'
+  ARTIFACT_NAME: 'app-build'
+  GRADLE_TASKS_BUILD: 'clean assemble'
+  GRADLE_TASKS_TEST: 'test'
+  GRADLE_TASKS_PUBLISH: 'publish'
+  RUN_TESTS: true
+
 steps:
+
   # Paso 1: Verificar entorno Java
   - script: |
       echo "Verificando versión de Java..."
       java --version
+      echo "JAVA_HOME: $(JAVA_HOME)"
     displayName: 'Verificar entorno Java'
 
-  # Paso 2: Compilar siempre (todas las ramas)
+  # Paso 2: Restaurar dependencias (Gradle)
   - task: Gradle@3
-    displayName: 'Compilar proyecto con Gradle (sin tests)'
+    displayName: 'Restaurar dependencias con Gradle'
     inputs:
-      workingDirectory: '.'
       gradleWrapperFile: 'gradlew'
-      tasks: 'clean assemble'
+      workingDirectory: '.'
+      tasks: 'dependencies'
       javaHomeOption: 'Path'
-      jdkDirectory: 'C:\Program Files\Java\jdk-21'
-      sqGradlePluginVersionChoice: 'build'
-      jdkArchitectureOption: 'x64'
+      jdkDirectory: '$(JAVA_HOME)'
+
+  # Paso 3: Compilar proyecto
+  - task: Gradle@3
+    displayName: 'Compilar proyecto con Gradle'
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      workingDirectory: '.'
+      tasks: '$(GRADLE_TASKS_BUILD)'
+      javaHomeOption: 'Path'
+      jdkDirectory: '$(JAVA_HOME)'
+
+  #Paso 4: Ejecutar tests
+  - task: Gradle@3
+    displayName: 'Ejecutar pruebas unitarias'
+    condition: eq(variables['RUN_TESTS'], 'true')
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      workingDirectory: '.'
+      tasks: '$(GRADLE_TASKS_TEST)'
+      javaHomeOption: 'Path'
+      jdkDirectory: '$(JAVA_HOME)'
+
+  # Paso 5: Publicar artefacto (resultado del build)
+  - task: CopyFiles@2
+    displayName: 'Copiar artefactos al staging directory'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/$(BUILD_DIR)'
+      Contents: '**/*.jar'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  # Paso 6: Publicar artefacto en Azure (opcional)
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publicar artefacto compilado'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: '$(ARTIFACT_NAME)'
+      publishLocation: 'Container'
+    condition: succeededOrFailed()
