@@ -69,9 +69,9 @@ steps:
   - task: CopyFiles@2
     displayName: 'Copiar artefactos al staging directory'
     inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/$(BUILD_DIR)'
+      SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
       Contents: '**/*.jar'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      argetFolder: '$(Build.ArtifactStagingDirectory)'
 
   # Paso 6: Publicar artefacto en Azure (opcional)
   - task: PublishBuildArtifacts@1
