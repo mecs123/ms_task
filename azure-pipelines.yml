@@ -8,13 +8,11 @@ trigger:
     include:
       - 'repo_task*'
 
-# Usa un agente propio (por ejemplo, tu PC o VM local)
 pool:
   name: 'Default'
   demands:
     - agent.name -equals custonAgentTask
 
-# Variables centralizadas
 variables:
   JAVA_HOME: 'C:\Program Files\Java\jdk-21'
   BUILD_DIR: 'build'
@@ -54,7 +52,7 @@ steps:
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
 
-  #Paso 4: Ejecutar tests
+  # Paso 4: Ejecutar tests
   - task: Gradle@3
     displayName: 'Ejecutar pruebas unitarias'
     condition: eq(variables['RUN_TESTS'], 'true')
@@ -65,7 +63,7 @@ steps:
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
 
-  # Paso 5: Publicar artefacto (resultado del build)
+  # Paso 5: Copiar artefactos al staging directory
   - task: CopyFiles@2
     displayName: 'Copiar artefactos al staging directory'
     inputs:
@@ -73,7 +71,7 @@ steps:
       Contents: '**/*.jar'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-  # Paso 6: Publicar artefacto en Azure (opcional)
+  # Paso 6: Publicar artefacto compilado
   - task: PublishBuildArtifacts@1
     displayName: 'Publicar artefacto compilado'
     inputs:
@@ -81,3 +79,12 @@ steps:
       ArtifactName: '$(ARTIFACT_NAME)'
       publishLocation: 'Container'
     condition: succeededOrFailed()
+
+  # Paso 7: Desplegar al App Service en Azure
+  - task: AzureWebApp@1
+    displayName: 'Desplegar aplicación Spring Boot al App Service'
+    inputs:
+      azureSubscription: 'sc-azure-webapp-task'   # conexión Azure DevOps ↔ Azure
+      appName: 'webapptask-app-dev'               # nombre de tu App Service
+      package: '$(Build.ArtifactStagingDirectory)/**/*.jar'
+
