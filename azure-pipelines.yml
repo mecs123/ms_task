@@ -71,7 +71,7 @@ steps:
     inputs:
       SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
       Contents: '**/*.jar'
-      argetFolder: '$(Build.ArtifactStagingDirectory)'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
   # Paso 6: Publicar artefacto en Azure (opcional)
   - task: PublishBuildArtifacts@1
