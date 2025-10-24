@@ -1,9 +1,9 @@
 postgres:
-  host: ${POSTGRES_HOST:localhost}
+  host: ${POSTGRES_HOST:taskserver.postgres.database.azure.com}
   port: ${POSTGRES_PORT:5432}
   database: ${POSTGRES_DB:task}
   username: ${POSTGRES_USER:postgres}
-  password: ${POSTGRES_PASSWORD:1234}
+  password: ${POSTGRES_PASSWORD:Manolo9315308+1}
   schema: ${POSTGRES_SCHEMA:public}
 
 external:
