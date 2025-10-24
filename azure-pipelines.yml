@@ -80,11 +80,11 @@ steps:
       publishLocation: 'Container'
     condition: succeededOrFailed()
 
-  # Paso 7: Desplegar al App Service en Azure
-  - task: AzureWebApp@1
-    displayName: 'Desplegar aplicación Spring Boot al App Service'
-    inputs:
-      azureSubscription: 'sc-azure-webapp-task'
-      appName: 'ms-api-task'
-      package: '$(Build.ArtifactStagingDirectory)/app-build/s-0.0.1-SNAPSHOT.jar'
-    condition: succeeded()
+#  # Paso 7: Desplegar al App Service en Azure
+#  - task: AzureWebApp@1
+#    displayName: 'Desplegar aplicación Spring Boot al App Service'
+#    inputs:
+#      azureSubscription: 'sc-azure-webapp-task'
+#      appName: 'ms-api-task'
+#      package: '$(Build.ArtifactStagingDirectory)/app-build/s-0.0.1-SNAPSHOT.jar'
+#    condition: succeeded()
