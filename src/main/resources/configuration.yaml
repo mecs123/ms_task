@@ -1,3 +1,6 @@
+server:
+  port: ${PORT:8080}
+
 postgres:
   host: ${POSTGRES_HOST:taskserver.postgres.database.azure.com}
   port: ${POSTGRES_PORT:5432}
@@ -9,7 +12,7 @@ postgres:
 external:
   api:
     base-url: ${EXTERNAL_API_URL:http://localhost:8080}
-    token: ${EXTERNAL_API_TOKEN:default-dev-token}
+    #token: ${EXTERNAL_API_TOKEN:default-dev-token}
 
 frontend:
   url: ${FRONT_URL:http://localhost:3000}

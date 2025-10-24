@@ -14,6 +14,8 @@ pool:
     - agent.name -equals custonAgentTask
 
 variables:
+- group: 'Dev'
+
   JAVA_HOME: 'C:\Program Files\Java\jdk-21'
   BUILD_DIR: 'build'
   BUILD_CONFIGURATION: 'release'
@@ -62,6 +64,13 @@ steps:
       tasks: '$(GRADLE_TASKS_TEST)'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
+
+  # Paso opcional: Verificar conexión a PostgreSQL
+  - script: |
+      echo "Verificando conexión con la base de datos..."
+      PGPASSWORD=$(PGPASSWORD) psql -h $(PGHOST) -U $(PGUSER) -d $(PGDATABASE) -p $(PGPORT) -c "\conninfo"
+    displayName: 'Verificar conexión a PostgreSQL'
+
 
   # Paso 5: Copiar artefactos al staging directory
   - task: CopyFiles@2
