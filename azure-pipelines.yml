@@ -87,12 +87,3 @@ steps:
       azureSubscription: 'sc-azure-webapp-task'
       appName: 'ms-api-task'
       package: '$(Build.ArtifactStagingDirectory)/app-build/s-0.0.1-SNAPSHOT.jar'
-  
-    # Paso 6: Publicar artefacto en Azure (opcional)
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publicar artefacto compilado'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'app-build'
-      publishLocation: 'Container'
-
