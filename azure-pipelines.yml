@@ -15,14 +15,30 @@ pool:
 
 variables:
 - group: 'Dev'
-  JAVA_HOME: 'C:\Program Files\Java\jdk-21'
-  BUILD_DIR: 'build'
-  BUILD_CONFIGURATION: 'release'
-  ARTIFACT_NAME: 'app-build'
-  GRADLE_TASKS_BUILD: 'clean assemble'
-  GRADLE_TASKS_TEST: 'test'
-  GRADLE_TASKS_PUBLISH: 'publish'
-  RUN_TESTS: true
+
+- name: JAVA_HOME
+  value: 'C:\Program Files\Java\jdk-21'
+
+- name: BUILD_DIR
+  value: 'build'
+
+- name: BUILD_CONFIGURATION
+  value: 'release'
+
+- name: ARTIFACT_NAME
+  value: 'app-build'
+
+- name: GRADLE_TASKS_BUILD
+  value: 'clean assemble'
+
+- name: GRADLE_TASKS_TEST
+  value: 'test'
+
+- name: GRADLE_TASKS_PUBLISH
+  value: 'publish'
+
+- name: RUN_TESTS
+  value: true
 
 steps:
 
