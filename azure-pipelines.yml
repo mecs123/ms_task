@@ -80,16 +80,6 @@ steps:
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
 
-  # Paso opcional: Verificar conexión a PostgreSQL
-  - script: |
-      echo Verificando conexión con la base de datos...
-      set PGPASSWORD=$(PGPASSWORD)
-      psql -h $(PGHOST) -U $(PGUSER) -d $(PGDATABASE) -p $(PGPORT) -c "\conninfo"
-    displayName: 'Verificar conexión a PostgreSQL'
-    env:
-      PGPASSWORD: $(PGPASSWORD)
-
-
   # Paso 5: Copiar artefactos al staging directory
   - task: CopyFiles@2
     displayName: 'Copiar artefactos al staging directory'
