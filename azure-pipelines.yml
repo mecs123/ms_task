@@ -84,7 +84,7 @@ steps:
   - task: AzureWebApp@1
     displayName: 'Desplegar aplicación Spring Boot al App Service'
     inputs:
-      azureSubscription: 'sc-azure-webapp-task'   # conexión Azure DevOps ↔ Azure
-      appName: 'webapptask-app-dev'               # nombre de tu App Service
-      package: '$(Build.ArtifactStagingDirectory)/**/*.jar'
+      azureSubscription: 'sc-azure-webapp-task'
+      appName: 'webapptask-app-dev'
+      package: '$(Build.ArtifactStagingDirectory)/app-build/s-0.0.1-SNAPSHOT.jar'
 
