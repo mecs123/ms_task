@@ -14,31 +14,36 @@ pool:
     - agent.name -equals custonAgentTask
 
 variables:
-- group: 'Dev'
+  - group: 'Dev'
 
-- name: JAVA_HOME
-  value: 'C:\Program Files\Java\jdk-21'
+  - name: JAVA_HOME
+    value: 'C:\Program Files\Java\jdk-21'
 
-- name: BUILD_DIR
-  value: 'build'
+  - name: BUILD_DIR
+    value: 'build'
 
-- name: BUILD_CONFIGURATION
-  value: 'release'
+  - name: BUILD_CONFIGURATION
+    value: 'release'
 
-- name: ARTIFACT_NAME
-  value: 'app-build'
+  - name: ARTIFACT_NAME
+    value: 'app-build'
 
-- name: GRADLE_TASKS_BUILD
-  value: 'clean assemble'
+  - name: GRADLE_TASKS_BUILD
+    value: 'clean build'
 
-- name: GRADLE_TASKS_TEST
-  value: 'test'
+  - name: GRADLE_TASKS_TEST
+    value: 'test'
 
-- name: GRADLE_TASKS_PUBLISH
-  value: 'publish'
+  - name: RUN_TESTS
+    value: true
 
-- name: RUN_TESTS
-  value: true
+  # Variables de despliegue
+  - name: azureSubscription
+    value: 'sc-azure-webapp-task'   # Tu conexión correcta
+  - name: appName
+    value: 'ms-api-task'            # Nombre de tu App Service en Azure
+  - name: jarFileName
+    value: 'repo_task-0.0.1-SNAPSHOT.jar'  # El .jar correcto
 
 steps:
 
@@ -54,7 +59,7 @@ steps:
     displayName: 'Restaurar dependencias con Gradle'
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: '.'
+      workingDirectory: 'repo_task'
       tasks: 'dependencies'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
@@ -64,18 +69,18 @@ steps:
     displayName: 'Compilar proyecto con Gradle'
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: '.'
+      workingDirectory: 'repo_task'
       tasks: '$(GRADLE_TASKS_BUILD)'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
 
-  # Paso 4: Ejecutar tests
+  # Paso 4: Ejecutar tests (si están activados)
   - task: Gradle@3
     displayName: 'Ejecutar pruebas unitarias'
     condition: eq(variables['RUN_TESTS'], 'true')
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: '.'
+      workingDirectory: 'repo_task'
       tasks: '$(GRADLE_TASKS_TEST)'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
@@ -84,7 +89,7 @@ steps:
   - task: CopyFiles@2
     displayName: 'Copiar artefactos al staging directory'
     inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
+      SourceFolder: '$(System.DefaultWorkingDirectory)/repo_task/build/libs'
       Contents: '**/*.jar'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
@@ -96,3 +101,11 @@ steps:
       ArtifactName: '$(ARTIFACT_NAME)'
       publishLocation: 'Container'
     condition: succeededOrFailed()
+
+  # Paso 7: Desplegar JAR en Azure App Service
+  - task: AzureWebApp@1
+    displayName: 'Desplegar aplicación Spring Boot en Azure App Service'
+    inputs:
+      azureSubscription: '$(azureSubscription)'     # Conexión de servicio
+      appName: '$(appName)'                         # App Service en Azure
+      package: '$(Build.ArtifactStagingDirectory)/$(jarFileName)'  # Ruta del JAR
