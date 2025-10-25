@@ -3,18 +3,25 @@ server:
 
 spring:
   r2dbc:
-    url: r2dbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}?sslMode=require
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
+    # Usuario codificado (postgres%40app-task-db) y SSL obligatorio
+    url: r2dbc:postgresql://postgres%40app-task-db:${PGPASSWORD:1234}@${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:task}?sslMode=require
+    # username y password opcionales si ya están en la URL
     pool:
       initial-size: 1
       max-size: 10
       validation-query: SELECT 1
 
 postgres:
-  host: ${PGHOST}
-  port: ${PGPORT}
-  database: ${PGDATABASE}
-  username: ${PGUSER}
-  password: ${PGPASSWORD}
+  host: ${PGHOST:localhost}
+  port: ${PGPORT:5432}
+  database: ${PGDATABASE:task}
+  username: ${PGUSER:postgres}       # para referencias internas, no afecta la URL codificada
+  password: ${PGPASSWORD:1234}       # idem
   schema: ${POSTGRES_SCHEMA:public}
+
+external:
+  api:
+    base-url: ${EXTERNAL_API_URL:http://localhost:8080}
+
+frontend:
+  url: ${FRONT_URL:http://localhost:3000}

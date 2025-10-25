@@ -23,6 +23,12 @@ public class PostgreSQLConnectionPool {
 //		String host = "localhost";
 //		String dbname = "task";
 //		String schemaValue = "public";
+
+//		String username = "postgres";
+//		String password = "Manolo9315308+1";
+//		String host = "app-task-db.postgres.database.azure.com";
+//		String dbname = "task";
+//		String schemaValue = "public";
 		return new PostgresqlConnectionFactory(
 				PostgresqlConnectionConfiguration.builder()
 						.host(properties.getHost())
