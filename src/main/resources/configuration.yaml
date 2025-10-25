@@ -3,26 +3,25 @@ server:
 
 spring:
   r2dbc:
-    url: r2dbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:task}?sslMode=require
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:1234}
+    url: r2dbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:task}?sslMode=require
+    username: ${PGUSER:postgres}
+    password: ${PGPASSWORD:1234}
     pool:
       initial-size: 1
       max-size: 10
       validation-query: SELECT 1
 
 postgres:
-  host: ${POSTGRES_HOST:localhost}
-  port: ${POSTGRES_PORT:5432}
-  database: ${POSTGRES_DB:task}
-  username: ${POSTGRES_USER:postgres}
-  password: ${POSTGRES_PASSWORD:1234}
+  host: ${PGHOST:localhost}
+  port: ${PGPORT:5432}
+  database: ${PGDATABASE:task}
+  username: ${PGUSER:postgres}
+  password: ${PGPASSWORD:1234}
   schema: ${POSTGRES_SCHEMA:public}
 
 external:
   api:
     base-url: ${EXTERNAL_API_URL:http://localhost:8080}
-    # token: ${EXTERNAL_API_TOKEN:default-dev-token}
 
 frontend:
   url: ${FRONT_URL:http://localhost:3000}
