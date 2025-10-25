@@ -59,7 +59,7 @@ steps:
     displayName: 'Restaurar dependencias con Gradle'
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: 'repo_task'
+      workingDirectory: '.'
       tasks: 'dependencies'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
@@ -69,7 +69,7 @@ steps:
     displayName: 'Compilar proyecto con Gradle'
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: 'repo_task'
+      workingDirectory: '.'
       tasks: '$(GRADLE_TASKS_BUILD)'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
@@ -80,7 +80,7 @@ steps:
     condition: eq(variables['RUN_TESTS'], 'true')
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: 'repo_task'
+      workingDirectory: '.'
       tasks: '$(GRADLE_TASKS_TEST)'
       javaHomeOption: 'Path'
       jdkDirectory: '$(JAVA_HOME)'
