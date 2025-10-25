@@ -6,3 +6,15 @@ spring:
     url: r2dbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}?sslMode=require
     username: ${PGUSER}
     password: ${PGPASSWORD}
+    pool:
+      initial-size: 1
+      max-size: 10
+      validation-query: SELECT 1
+
+postgres:
+  host: ${PGHOST}
+  port: ${PGPORT}
+  database: ${PGDATABASE}
+  username: ${PGUSER}
+  password: ${PGPASSWORD}
+  schema: ${POSTGRES_SCHEMA:public}
