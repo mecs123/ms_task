@@ -2,42 +2,46 @@ package com.task.api.task001.infrastructure.entryPoints.config;
 
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
+import io.r2dbc.postgresql.client.SSLMode;
 import io.r2dbc.spi.ConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PostgreSQLConnectionPool {
 
-	private final PostgresqlConnectionProperties properties;
+	@Value("${PGHOST}")
+	private String host;
 
-    public PostgreSQLConnectionPool(PostgresqlConnectionProperties properties) {
-        this.properties = properties;
-    }
+	@Value("${PGPORT}")
+	private int port;
 
-    @Bean
+	@Value("${PGDATABASE}")
+	private String database;
+
+	@Value("${PGUSER}")
+	private String username; // ejemplo: postgres@app-task-db
+
+	@Value("${PGPASSWORD}")
+	private String password;
+
+	@Value("${POSTGRES_SCHEMA:public}")
+	private String schema;
+
+	@Bean
 	public ConnectionFactory connectionFactory() {
+		PostgresqlConnectionConfiguration config = PostgresqlConnectionConfiguration.builder()
+				.host(host)
+				.port(port)
+				.database(database)
+				.username(username)
+				.password(password)
+				.schema(schema)
+				.enableSsl()
+				.sslMode(SSLMode.REQUIRE)
+				.build();
 
-//		String username = "postgres";
-//		String password = "1234";
-//		String host = "localhost";
-//		String dbname = "task";
-//		String schemaValue = "public";
-
-//		String username = "postgres";
-//		String password = "Manolo9315308+1";
-//		String host = "app-task-db.postgres.database.azure.com";
-//		String dbname = "task";
-//		String schemaValue = "public";
-		return new PostgresqlConnectionFactory(
-				PostgresqlConnectionConfiguration.builder()
-						.host(properties.getHost())
-						.port(properties.getPort())
-						.database(properties.getDatabase())
-						.username(properties.getUsername())
-						.password(properties.getPassword())
-						.schema(properties.getSchema())
-						.build()
-		);
+		return new PostgresqlConnectionFactory(config);
 	}
 }
