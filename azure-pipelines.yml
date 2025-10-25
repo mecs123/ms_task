@@ -89,7 +89,7 @@ steps:
   - task: CopyFiles@2
     displayName: 'Copiar artefactos al staging directory'
     inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/repo_task/build/libs'
+      SourceFolder: 'build/libs'
       Contents: '**/*.jar'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
