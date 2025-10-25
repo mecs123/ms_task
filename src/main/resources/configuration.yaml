@@ -1,8 +1,18 @@
 server:
-  port: ${PORT:8080}
+  port: ${PORT:8080}   # Azure App Service usa la variable PORT
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://${POSTGRES_USER}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslMode=require
+    username: ${POSTGRES_USER}@${POSTGRES_HOST}
+    password: ${POSTGRES_PASSWORD}
+    pool:
+      initial-size: 1
+      max-size: 10
+      validation-query: SELECT 1
 
 postgres:
-  host: ${POSTGRES_HOST:taskserver.postgres.database.azure.com}
+  host: ${POSTGRES_HOST:app-task-db.postgres.database.azure.com}
   port: ${POSTGRES_PORT:5432}
   database: ${POSTGRES_DB:task}
   username: ${POSTGRES_USER:postgres}
@@ -12,7 +22,7 @@ postgres:
 external:
   api:
     base-url: ${EXTERNAL_API_URL:http://localhost:8080}
-    #token: ${EXTERNAL_API_TOKEN:default-dev-token}
+    # token: ${EXTERNAL_API_TOKEN:default-dev-token}
 
 frontend:
   url: ${FRONT_URL:http://localhost:3000}
