@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  task-api-001:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PGHOST: task-db
+      PGPORT: 5432
+      PGDATABASE: task
+      PGUSER: postgres
+      PGPASSWORD: 1234
+    restart: always
+    depends_on:
+      task-db:
+        condition: service_healthy
+
+  task-db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: task
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

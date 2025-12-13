@@ -11,19 +11,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PostgreSQLConnectionPool {
 
-	@Value("${PGHOST}")
+	@Value("${PGHOST:localhost}")
 	private String host;
 
-	@Value("${PGPORT}")
+	@Value("${PGPORT:5432}")
 	private int port;
 
-	@Value("${PGDATABASE}")
+	@Value("${PGDATABASE:mi_base}")
 	private String database;
 
-	@Value("${PGUSER}")
-	private String username; // ejemplo: postgres@app-task-db
+	@Value("${PGUSER:postgres}")
+	private String username;
 
-	@Value("${PGPASSWORD}")
+	@Value("${PGPASSWORD:password}")
 	private String password;
 
 	@Value("${POSTGRES_SCHEMA:public}")

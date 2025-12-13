@@ -2,30 +2,21 @@ server:
   port: ${PORT:8080}
 
 spring:
-  application:
-    name: task-api-001
-
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
-
   r2dbc:
-    url: jdbc:postgresql://app-task-db.postgres.database.azure.com:5432/postgres?user=postgres&password={Manolo9315308+1}&sslmode=require
+    # Usuario codificado (postgres%40app-task-db) y SSL obligatorio
+    url: r2dbc:postgresql://postgres%40app-task-db:${PGPASSWORD:1234}@${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:task}?sslMode=require
+    # username y password opcionales si ya están en la URL
     pool:
       initial-size: 1
       max-size: 10
       validation-query: SELECT 1
-    username: ${PGUSER:postgres@app-task-db}
-    password: ${PGPASSWORD:Manolo9315308+1}
-    database: ${PGDATABASE:task}
-    host: ${PGHOST:app-task-db.postgres.database.azure.com}
-    port: ${PGPORT:5432}
 
 postgres:
-  host: ${PGHOST:app-task-db.postgres.database.azure.com}
+  host: ${PGHOST:localhost}
   port: ${PGPORT:5432}
   database: ${PGDATABASE:task}
-  username: ${PGUSER:postgres@app-task-db}
-  password: ${PGPASSWORD:Manolo9315308+1}
+  username: ${PGUSER:postgres}       # para referencias internas, no afecta la URL codificada
+  password: ${PGPASSWORD:1234}       # idem
   schema: ${POSTGRES_SCHEMA:public}
 
 external:
