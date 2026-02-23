@@ -9,8 +9,11 @@ spring:
 
   # Activa el perfil desde variable de entorno (por defecto: dev)
   profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+    active:
+      - dev
+   # active: ${SPRING_PROFILES_ACTIVE:dev}
 
   # Importa el archivo configuration.yaml
   config:
-    import: optional:classpath:configuration.yaml
+    import: optional:classpath:application-dev.yaml
+    #import: optional:classpath:configuration.yaml

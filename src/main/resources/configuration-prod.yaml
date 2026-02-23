@@ -1,0 +1,5 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://postgres%40app-task-db:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}?sslMode=require
+    username: ${PGUSER:postgres}
+    password: ${PGPASSWORD}

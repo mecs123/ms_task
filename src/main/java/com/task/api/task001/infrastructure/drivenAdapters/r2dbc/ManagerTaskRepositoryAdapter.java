@@ -1,4 +1,4 @@
-package com.task.api.task001.infrastructure.drivenAdapters.r2dbcPostgreSql.adapters;
+package com.task.api.task001.infrastructure.drivenAdapters.r2dbc;
 
 import com.task.api.task001.aplication.dto.ManagerTaskDTO;
 import com.task.api.task001.aplication.port.out.ManagerTaskRepositoryPort;

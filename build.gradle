@@ -50,6 +50,10 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	// H2 Reactive
+	implementation 'io.r2dbc:r2dbc-h2'
+	runtimeOnly 'com.h2database:h2'
+
 	// Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'

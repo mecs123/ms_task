@@ -34,12 +34,7 @@ public class UserTaskHandler {
                                 )
                                 .onErrorResume(UserAlreadyExistsException.class, e ->
                                         ServerResponse.status(409)
-                                                .bodyValue(e.getMessage())
-                                ).onErrorResume(Exception.class, e ->
-                                        ServerResponse.status(500)
-                                                .bodyValue("Unexpected error: " + e.getMessage())
-
-                                )
+                                                .bodyValue(e.getMessage())).onErrorResume(Exception.class, e -> ServerResponse.status(500).bodyValue("Unexpected error: " + e.getMessage()))
                 );
     }
 

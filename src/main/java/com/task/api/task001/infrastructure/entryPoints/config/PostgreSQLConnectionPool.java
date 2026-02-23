@@ -29,6 +29,7 @@ public class PostgreSQLConnectionPool {
 	@Value("${POSTGRES_SCHEMA:public}")
 	private String schema;
 
+	/*
 	@Bean
 	public ConnectionFactory connectionFactory() {
 		PostgresqlConnectionConfiguration config = PostgresqlConnectionConfiguration.builder()
@@ -44,4 +45,6 @@ public class PostgreSQLConnectionPool {
 
 		return new PostgresqlConnectionFactory(config);
 	}
+
+	 */
 }
