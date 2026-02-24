@@ -11,12 +11,8 @@ import org.mapstruct.factory.Mappers;
 public interface AlumnoMapper {
 
     AlumnoMapper INSTANCE = Mappers.getMapper(AlumnoMapper.class);
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "nombre", source = "nombre")
-    @Mapping(target = "apellido", source = "apellido")
-    @Mapping(target = "estado", source = "estado")
-    @Mapping(target = "edad", source = "edad")
+
     Alumno toDomain(RequestAlumnoDTO requestAlumno);
 
-    ResponseAlumnoDTO toResponse(Alumno alumno);
+
 }

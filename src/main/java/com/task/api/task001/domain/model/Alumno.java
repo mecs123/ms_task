@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("alumno")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
