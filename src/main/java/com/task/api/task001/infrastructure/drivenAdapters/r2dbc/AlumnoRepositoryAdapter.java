@@ -5,6 +5,7 @@ import com.task.api.task001.domain.Estado;
 import com.task.api.task001.domain.model.Alumno;
 import com.task.api.task001.infrastructure.drivenAdapters.repository.AlumnoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,7 +18,13 @@ public class AlumnoRepositoryAdapter implements AlumnoRepositoryPort {
 
     @Override
     public Mono<Alumno> save(Alumno alumno) {
-        return repository.save(alumno);
+        return repository.insertAlumno(
+                alumno.getId(),
+                alumno.getNombre(),
+                alumno.getApellido(),
+                alumno.getEstado(),
+                alumno.getEdad()
+        ).thenReturn(alumno);
     }
 
     @Override
@@ -27,6 +34,6 @@ public class AlumnoRepositoryAdapter implements AlumnoRepositoryPort {
 
     @Override
     public Flux<Alumno> getAll(Estado estadoByAlumno) {
-        return repository.findAll();
+        return repository.findByEstado(estadoByAlumno);
     }
 }

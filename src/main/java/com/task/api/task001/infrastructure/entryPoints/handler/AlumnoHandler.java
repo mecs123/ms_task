@@ -25,6 +25,7 @@ public class AlumnoHandler {
     public Mono<ServerResponse> crearAlumno(ServerRequest request) {
         return request.bodyToMono(RequestAlumnoDTO.class)
                 .map(alumnoMapper::toDomain)
+                .doOnNext(a -> System.out.println("ID recibido: " + a.getId()))
                 .flatMap(alumno ->
                         alumnoCase.crearAlumno(alumno)
                                 .then(ServerResponse.status(201).build())

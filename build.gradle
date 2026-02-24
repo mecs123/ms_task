@@ -30,16 +30,14 @@ repositories {
 }
 
 dependencies {
-	// Spring Boot & WebFlux
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-	// PostgreSQL R2DBC Driver
 	implementation 'org.postgresql:r2dbc-postgresql:1.0.5.RELEASE'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'org.postgresql:r2dbc-postgresql'
 
-	// Spring Boot Actuator (opcional para métricas y health)
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 	// MapStruct
@@ -49,6 +47,7 @@ dependencies {
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
 	// H2 Reactive
 	implementation 'io.r2dbc:r2dbc-h2'
@@ -57,7 +56,9 @@ dependencies {
 	// Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.withType(Test) {
