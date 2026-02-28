@@ -5,7 +5,6 @@ import com.task.api.task001.domain.Estado;
 import com.task.api.task001.domain.model.Alumno;
 import com.task.api.task001.infrastructure.drivenAdapters.repository.AlumnoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

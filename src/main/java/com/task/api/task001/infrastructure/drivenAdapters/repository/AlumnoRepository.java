@@ -22,5 +22,8 @@ public interface AlumnoRepository
             Integer edad
     );
 
+    @Query("""
+            SELECT * FROM alumno WHERE estado = :estado
+            """)
     Flux<Alumno> findByEstado(Estado estado);
 }
